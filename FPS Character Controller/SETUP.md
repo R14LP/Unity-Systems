@@ -124,9 +124,7 @@ For **every** animation clip you use (Idle, all 8 Walk directions, all 8 Run dir
    - Root Transform Position (Y) → Bake Into Pose: checked, Based Upon (at Start): `Original`
    - Click **Apply**
 
-> **Screenshots worth keeping for the repo:** one Rig-tab screenshot<img width="441" height="312" alt="rig-settings" src="https://github.com/user-attachments/assets/6382836d-8f40-48d1-9a57-79512395aabf" />
- and one Animation-tab<img width="441" height="954" alt="animation-loop-settings" src="https://github.com/user-attachments/assets/026882df-f8e5-45d1-ab18-d0f8645d3c02" />
- (loop settings) screenshot are enough as a reference — you don't need one per clip, the settings are identical for all of them (aside from the Loop Time exception above).
+> **Screenshots worth keeping for the repo:** one Rig-tab screenshot and one Animation-tab (loop settings) screenshot are enough as a reference — you don't need one per clip, the settings are identical for all of them (aside from the Loop Time exception above).
 
 ## 7. Animator Controller Setup
 
@@ -137,8 +135,7 @@ Create an Animator Controller and add these **Parameters**:
 - `Grounded` (Bool)
 - `Jump` (Trigger)
 
-*Screenshot worth keeping: the Parameters list.*<img width="148" height="179" alt="animator-parameters" src="https://github.com/user-attachments/assets/368a98fe-a57f-4ca2-ba84-10807526b787" />
-
+*Screenshot worth keeping: the Parameters list.*
 
 ### 7.1 Locomotion Blend Tree
 
@@ -147,8 +144,7 @@ Create an Animator Controller and add these **Parameters**:
 3. In the Motion list, add two entries via **+ → Blend Tree** (not a direct animation clip). Name one `walk`, the other `run`.
 4. Set Threshold: `walk` = **3**, `run` = **7** (match these to your actual walk/sprint speeds in `PlayerMovement`).
 
-*Screenshot worth keeping: this outer 1D blend tree's Inspector (Motion list showing walk/run thresholds).*<img width="441" height="300" alt="blend-tree-outer" src="https://github.com/user-attachments/assets/af6af85c-065e-456a-bb21-664a343059f6" />
-
+*Screenshot worth keeping: this outer 1D blend tree's Inspector (Motion list showing walk/run thresholds).*
 
 5. Double-click into `walk`. Set Blend Type `2D Freeform Directional`, Parameters X = `VelocityX`, Y = `VelocityZ`.
 6. Add 9 motions (Idle + all 8 directions) with these exact positions:
@@ -167,9 +163,7 @@ Create an Animator Controller and add these **Parameters**:
 
 7. Go back up a level, double-click into `run`, and repeat the exact same setup using your run/sprint clips at the same 9 positions.
 
-*Screenshot worth keeping: ONE of the two 2D directional sub-trees (walk or run — they're structurally identical) with the position grid and Motion list visible. You don't need both.*<img width="441" height="956" alt="blend-tree-walk-2d" src="https://github.com/user-attachments/assets/0f3991ea-0c63-45f8-a50c-ed1e6349e8b4" /><img width="442" height="955" alt="blend-tree-run-2d" src="https://github.com/user-attachments/assets/a8ef4aec-340e-4056-9100-83ab344574ad" />
-
-
+*Screenshot worth keeping: ONE of the two 2D directional sub-trees (walk or run — they're structurally identical) with the position grid and Motion list visible. You don't need both.*
 
 > Using real diagonal-capture clips (not just blended cardinals) at the ±0.7/±0.7 positions is what fixes foot-crossing on diagonal movement — if you only have 4 cardinal clips, the blend tree will interpolate between them instead, which is more prone to visible foot artifacts.
 
@@ -190,10 +184,7 @@ Set up these 6 transitions exactly:
 
 **Why two ways out of JumpUp?** If you land quickly (a short hop), `JumpUp → Landing` cuts straight to the landing pose without waiting for the jump-start clip to finish. If you're still airborne once that clip nears its end, `JumpUp → Falling` (via Exit Time) takes over instead, so you get a proper looping fall animation rather than freezing on the last frame of the jump-start clip.
 
-*Screenshots worth keeping:*<img width="1325" height="658" alt="animator-state-graph" src="https://github.com/user-attachments/assets/1f2e96b3-5cfd-4b38-be47-4a611be95857" /><img width="440" height="954" alt="jumpup-to-falling" src="https://github.com/user-attachments/assets/dc5405e5-25b5-4d8e-883a-76254e051d51" /><img width="445" height="955" alt="jumpup-to-landing" src="https://github.com/user-attachments/assets/cd22366f-cc79-46f0-8a66-241eeb3e237d" />
-
-
-
+*Screenshots worth keeping:*
 - *the full state graph overview (all 4 states + Any State + their connecting arrows)*
 - *the `JumpUp → Falling` transition Inspector (shows the Exit Time toggle ON, no condition)*
 - *the `JumpUp → Landing` transition Inspector (shows Exit Time OFF, `Grounded = true` condition)*
